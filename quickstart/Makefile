@@ -2,6 +2,8 @@ re: clean run
 
 run: keys
 	bash run.sh
+	docker stop pcs
+	bash launch-pcs.sh
 
 keys:
 	bash create-keys.sh

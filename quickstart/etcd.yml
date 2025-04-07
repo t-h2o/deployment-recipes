@@ -10,3 +10,6 @@ services:
     networks:
       - internal
       - jwt-internal
+    ports:
+      - 2379:2379
+      - 2380:2380
