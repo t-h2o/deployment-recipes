@@ -64,6 +64,7 @@ create_config() {
 	fi
 
 	cat >"${CONFIG_PATH}"/config.py <<-eof
+		SUSHY_EMULATOR_LIBVIRT_URI = u'qemu+ssh://$(whoami)@172.17.0.1/system'
 		SUSHY_EMULATOR_AUTH_FILE = "/htpasswd/auth-file"
 		SUSHY_EMULATOR_STORAGE = {
 		    "${NODE_UUID}": [
