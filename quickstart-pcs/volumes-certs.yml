@@ -1,0 +1,3 @@
+volumes:
+  haproxy-certs:
+  acme-certs:

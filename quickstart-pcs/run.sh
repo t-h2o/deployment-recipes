@@ -12,6 +12,7 @@ KEYS_PATH="keys"
 
 docker_yml=(
 "base"
+"volumes-certs"
 "postgres"
 "jwt-security"
 "haproxy-api-gateway"
@@ -30,6 +31,22 @@ _get_docker_list() {
 	for yml in ${docker_yml[@]}; do
 		echo "-f ${yml}.yml"
 	done
+}
+
+prestart_service() {
+	local LIST_YAML=("-f" "autocert.yml" "-f" "acme-register.yml" "-f" "volumes-certs.yml")
+	docker compose \
+		"${LIST_YAML[@]}" \
+		up -d
+
+	while [ "$(docker ps --filter "name=${DOMAIN_NAME}" --format json | jq .Names)" = "${DOMAIN_NAME}" ]
+	do
+		sleep 1
+	done
+
+	docker compose \
+		"${LIST_YAML[@]}" \
+		down
 }
 
 start_service() {
@@ -95,6 +112,7 @@ add_ip_domain_name() {
 }
 
 main() {
+	prestart_service
 	start_service
 	generate_file
 	vault_configure_jwt

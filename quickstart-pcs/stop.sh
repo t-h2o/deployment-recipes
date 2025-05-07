@@ -1,5 +1,6 @@
 docker compose \
 	-f base.yml \
+	-f volumes-certs.yml \
 	-f postgres.yml \
 	-f jwt-security.yml \
 	-f haproxy-api-gateway.yml \
@@ -11,4 +12,5 @@ docker compose \
 	-f etcd.yml \
 	-f rfe.yml \
 	-f sushy.yml \
+	-f manta.yml \
 	-f configurator.yml down

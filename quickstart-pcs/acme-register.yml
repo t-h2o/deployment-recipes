@@ -1,0 +1,13 @@
+services:
+  acme-register:
+    container_name: ${SYSTEM_NAME}.${SYSTEM_DOMAIN}
+    image: ghcr.io/openchami/acme.sh:v0.2.2
+    networks:
+      - cert-internal
+    depends_on:
+      step-ca:
+        condition: service_healthy
+    volumes:
+      - step-root-ca:/root_ca/:ro
+      - acme-certs:/root/.acme.sh
+    entrypoint: ["/usr/bin/acme.sh", "--server", "https://step-ca:9000/acme/acme/directory", "--ca-bundle", "/root_ca/root_ca.crt", "-d", "${SYSTEM_NAME}.${SYSTEM_DOMAIN}", "--issue", "--standalone", "--force"]
