@@ -20,10 +20,3 @@ curl localhost:27778/boot/v1/bootscript\?name\=x1000c0s0b1n0
 sleep 10
 chain https://foobar.openchami.cluster/apis/bss/boot/v1/bootscript?mac=00:40:a6:2f:f8:8d&arch=${buildarch}&ts=1746779601
 ----
-
-----
-curl localhost:27778/boot/v1/bootscript\?name\=x1000c0s0b1n0
-#!ipxe
-sleep 10
-chain https://foobar.openchami.cluster/apis/bss/boot/v1/bootscript?mac=00:40:a6:2f:f8:8d&arch=${buildarch}&ts=1746780019
-----
