@@ -24,6 +24,7 @@ docker_yml=(
 "etcd"
 "rfe"
 "sushy"
+"manta"
 "configurator"
 )
 
