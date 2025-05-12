@@ -8,6 +8,6 @@ services:
       - internal
       - jwt-internal
     volumes:
-      - ./manta-ws.config:/root/.config/manta/config.toml
+      - ./configs-manta:/root/.config/manta
     ports:
       - 3000:3000

@@ -34,7 +34,31 @@ _get_docker_list() {
 	done
 }
 
+_manta_configs() {
+	mkdir -p configs-manta
+	cat > configs-manta/config.toml <<-EOF
+	log = "info"
+
+	site = "ochami"
+
+	parent_hsm_group = "nodes_free"
+
+	audit_file = "/tmp/manta_audit.log"
+
+	[sites]
+
+	[sites.ochami]
+
+	backend = "ochami"
+
+	shasta_base_url = "https://${DOMAIN_NAME}:443"
+	root_ca_cert_file = "/root/cacert.pem"
+	EOF
+}
+
 prestart_service() {
+	_manta_configs
+
 	local LIST_YAML=("-f" "autocert.yml" "-f" "acme-register.yml" "-f" "volumes-certs.yml")
 	docker compose \
 		"${LIST_YAML[@]}" \
