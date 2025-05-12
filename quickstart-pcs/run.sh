@@ -10,36 +10,36 @@ XNAME=x1000c0s0b1
 
 KEYS_PATH="keys"
 
+docker_yml=(
+"base"
+"postgres"
+"jwt-security"
+"haproxy-api-gateway"
+"openchami-svcs"
+"autocert"
+"coredhcp"
+"pcs"
+"vault"
+"etcd"
+"rfe"
+"sushy"
+"configurator"
+)
+
+_get_docker_list() {
+	for yml in ${docker_yml[@]}; do
+		echo "-f ${yml}.yml"
+	done
+}
+
 start_service() {
 	until docker compose \
-	  -f base.yml \
-	  -f postgres.yml \
-	  -f jwt-security.yml \
-	  -f haproxy-api-gateway.yml \
-	  -f openchami-svcs.yml \
-	  -f autocert.yml \
-	  -f coredhcp.yml \
-	  -f pcs.yml \
-	  -f vault.yml \
-	  -f etcd.yml \
-	  -f rfe.yml \
-	  -f sushy.yml \
-	  -f configurator.yml up -d
+		$(_get_docker_list) \
+	  up -d
 	do
 	docker compose \
-	  -f base.yml \
-	  -f postgres.yml \
-	  -f jwt-security.yml \
-	  -f haproxy-api-gateway.yml \
-	  -f openchami-svcs.yml \
-	  -f autocert.yml \
-	  -f coredhcp.yml \
-	  -f pcs.yml \
-	  -f vault.yml \
-	  -f etcd.yml \
-	  -f rfe.yml \
-	  -f sushy.yml \
-	  -f configurator.yml down
+		$(_get_docker_list) \
+	  down
 	done
 }
 
