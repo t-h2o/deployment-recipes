@@ -4,6 +4,8 @@ export VAULT_ADDR=http://127.0.0.1:8200
 export VAULT_TOKEN=hms
 export SUSHY_URL="http://localhost:8000"
 
+HOSTS_FILE="/etc/hosts"
+DOMAIN_NAME="foobar.openchami.cluster"
 XNAME=x1000c0s0b1
 
 KEYS_PATH="keys"
@@ -86,12 +88,19 @@ smd_populate() {
 	}]}' http://localhost:27779/hsm/v2/Inventory/RedfishEndpoints
 }
 
+add_ip_domain_name() {
+	if [ -e "${HOSTS_FILE}" ] && ! grep "${DOMAIN_NAME}" "${HOSTS_FILE}" > /dev/null ; then
+		echo "127.0.0.1 ${DOMAIN_NAME}" | sudo tee -a "${HOSTS_FILE}" > /dev/null
+	fi
+}
+
 main() {
 	start_service
 	generate_file
 	vault_configure_jwt
 	vault_create_keystore
 	smd_populate
+	add_ip_domain_name
 }
 
 main
