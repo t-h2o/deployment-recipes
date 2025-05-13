@@ -64,10 +64,10 @@ prestart_service() {
 		"${LIST_YAML[@]}" \
 		up -d
 
-	while [ "$(docker ps --filter "name=${DOMAIN_NAME}" --format json | jq .Names)" = "${DOMAIN_NAME}" ]
-	do
-		sleep 1
-	done
+	while IFS= read -r result; do
+		echo $result
+		break
+	done < <(docker events --filter "container=${DOMAIN_NAME}" --filter "event=die")
 
 	docker compose \
 		"${LIST_YAML[@]}" \
