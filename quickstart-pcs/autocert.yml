@@ -1,8 +1,12 @@
 volumes:
   step-ca-db:
+    name: openchami-quickstart-step-ca-db
   step-ca-home:
+    name: openchami-quickstart-step-ca-home
   step-root-ca:
+    name: openchami-quickstart-step-root-ca
   local-certs:
+    name: openchami-quickstart-local-certs
 
 networks:
   cert-internal:

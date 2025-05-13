@@ -1,5 +1,6 @@
 volumes:
   postgres-data:
+    name: openchami-quickstart-postgres-data
 
 services:
   postgres: # Postgres

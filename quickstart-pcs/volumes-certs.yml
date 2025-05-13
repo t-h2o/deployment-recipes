@@ -1,3 +1,5 @@
 volumes:
   haproxy-certs:
+    name: openchami-quickstart-haproxy-certs
   acme-certs:
+    name: openchami-quickstart-acme-certs
