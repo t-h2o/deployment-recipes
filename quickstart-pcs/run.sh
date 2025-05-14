@@ -65,7 +65,6 @@ prestart_service() {
 		up -d
 
 	while IFS= read -r result; do
-		echo $result
 		break
 	done < <(docker events --filter "container=${DOMAIN_NAME}" --filter "event=die")
 
