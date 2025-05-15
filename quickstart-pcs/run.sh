@@ -73,11 +73,12 @@ prestart_service() {
 }
 
 start_service() {
+	readarray -t DOCKER_LIST < <(_get_docker_list)
 	until docker compose \
-		$(_get_docker_list) \
+		"${DOCKER_LIST[@]}" \
 		up -d; do
 		docker compose \
-			$(_get_docker_list) \
+			"${DOCKER_LIST[@]}" \
 			down
 	done
 }
