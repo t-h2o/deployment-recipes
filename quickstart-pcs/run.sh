@@ -28,7 +28,7 @@ docker_yml=(
 )
 
 _get_docker_list() {
-	for yml in ${docker_yml[@]}; do
+	for yml in "${docker_yml[@]}"; do
 		echo "-f ${yml}.yml"
 	done
 }
