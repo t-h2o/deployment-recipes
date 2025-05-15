@@ -6,7 +6,6 @@ export SUSHY_URL="http://localhost:8000"
 
 HOSTS_FILE="/etc/hosts"
 DOMAIN_NAME="foobar.openchami.cluster"
-XNAME=x1000c0s0b1
 
 KEYS_PATH="keys"
 
