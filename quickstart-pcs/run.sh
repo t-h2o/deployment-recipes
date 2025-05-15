@@ -11,21 +11,21 @@ XNAME=x1000c0s0b1
 KEYS_PATH="keys"
 
 docker_yml=(
-"base"
-"volumes-certs"
-"postgres"
-"jwt-security"
-"haproxy-api-gateway"
-"openchami-svcs"
-"autocert"
-"coredhcp"
-"pcs"
-"vault"
-"etcd"
-"rfe"
-"sushy"
-"manta"
-"configurator"
+	"base"
+	"volumes-certs"
+	"postgres"
+	"jwt-security"
+	"haproxy-api-gateway"
+	"openchami-svcs"
+	"autocert"
+	"coredhcp"
+	"pcs"
+	"vault"
+	"etcd"
+	"rfe"
+	"sushy"
+	"manta"
+	"configurator"
 )
 
 _get_docker_list() {
@@ -36,23 +36,23 @@ _get_docker_list() {
 
 _manta_configs() {
 	mkdir -p configs-manta
-	cat > configs-manta/config.toml <<-EOF
-	log = "info"
+	cat >configs-manta/config.toml <<-EOF
+		log = "info"
 
-	site = "ochami"
+		site = "ochami"
 
-	parent_hsm_group = "nodes_free"
+		parent_hsm_group = "nodes_free"
 
-	audit_file = "/tmp/manta_audit.log"
+		audit_file = "/tmp/manta_audit.log"
 
-	[sites]
+		[sites]
 
-	[sites.ochami]
+		[sites.ochami]
 
-	backend = "ochami"
+		backend = "ochami"
 
-	shasta_base_url = "https://${DOMAIN_NAME}:443"
-	root_ca_cert_file = "/root/cacert.pem"
+		shasta_base_url = "https://${DOMAIN_NAME}:443"
+		root_ca_cert_file = "/root/cacert.pem"
 	EOF
 }
 
@@ -76,32 +76,30 @@ prestart_service() {
 start_service() {
 	until docker compose \
 		$(_get_docker_list) \
-	  up -d
-	do
-	docker compose \
-		$(_get_docker_list) \
-	  down
+		up -d; do
+		docker compose \
+			$(_get_docker_list) \
+			down
 	done
 }
 
 generate_file() {
 	source bash_functions.sh
-	gen_access_token > access_token
-	get_ca_cert > cacert.pem
+	gen_access_token >access_token
+	get_ca_cert >cacert.pem
 }
 
 vault_configure_jwt() {
-	if docker exec -e VAULT_TOKEN=$VAULT_TOKEN vault vault auth list --format json | jq -e 'has("jwt/")'
-	then
+	if docker exec -e VAULT_TOKEN=$VAULT_TOKEN vault vault auth list --format json | jq -e 'has("jwt/")'; then
 		return
 	fi
 
 	docker exec -e VAULT_TOKEN=$VAULT_TOKEN vault vault auth enable -path=jwt jwt
 	docker exec -e VAULT_TOKEN=$VAULT_TOKEN vault vault write auth/jwt/role/test-role policies="metrics" user_claim="sub" role_type="jwt" bound_audiences="test"
-	cat > policy.yml <<-\EOF
-	path "secret/hms-creds" {
-	capabilities = ["read", "list"]
-	}
+	cat >policy.yml <<-\EOF
+		path "secret/hms-creds" {
+		capabilities = ["read", "list"]
+		}
 	EOF
 	docker cp policy.yml vault:/policy.yml
 	docker exec -e VAULT_TOKEN=hms vault vault policy write metrics /policy.yml
@@ -112,8 +110,8 @@ vault_configure_jwt() {
 vault_create_keystore() {
 	docker exec -e VAULT_TOKEN=$VAULT_TOKEN vault vault secrets disable secret
 	docker exec -e VAULT_TOKEN=$VAULT_TOKEN vault vault secrets enable \
-	-path "secret/hms-creds" \
-	-version=1 kv
+		-path "secret/hms-creds" \
+		-version=1 kv
 }
 
 smd_populate() {
@@ -130,8 +128,8 @@ smd_populate() {
 }
 
 add_ip_domain_name() {
-	if [ -e "${HOSTS_FILE}" ] && ! grep "${DOMAIN_NAME}" "${HOSTS_FILE}" > /dev/null ; then
-		echo "127.0.0.1 ${DOMAIN_NAME}" | sudo tee -a "${HOSTS_FILE}" > /dev/null
+	if [ -e "${HOSTS_FILE}" ] && ! grep "${DOMAIN_NAME}" "${HOSTS_FILE}" >/dev/null; then
+		echo "127.0.0.1 ${DOMAIN_NAME}" | sudo tee -a "${HOSTS_FILE}" >/dev/null
 	fi
 }
 

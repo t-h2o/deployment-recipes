@@ -12,10 +12,10 @@ function create_user_and_database() {
 	local password="'$3'"
 	echo "  Creating user '$username' and database '$database'"
 	psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
-	    CREATE USER "$username" WITH PASSWORD $password;
-	    CREATE DATABASE "$database";
-	    GRANT ALL PRIVILEGES ON DATABASE "$database" TO "$username";
-EOSQL
+		    CREATE USER "$username" WITH PASSWORD $password;
+		    CREATE DATABASE "$database";
+		    GRANT ALL PRIVILEGES ON DATABASE "$database" TO "$username";
+	EOSQL
 }
 
 if [ -n "$POSTGRES_MULTIPLE_DATABASES" ]; then

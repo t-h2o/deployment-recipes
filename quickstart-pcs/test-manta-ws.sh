@@ -2,7 +2,7 @@ curl -s -X DELETE -H "Authorization: Bearer $(<access_token)" http://localhost:3
 curl -s -H "Authorization: Bearer $(<access_token)" http://localhost:3000/redfish | jq
 
 curl -s -H "Authorization: Bearer $(<access_token)" -H "Content-Type: application/json" http://localhost:3000/redfish \
--d '{"RedfishEndpoints":[{
+	-d '{"RedfishEndpoints":[{
   "ID":"x1000c0s0b1",
   "FQDN":"x1000c0s0b1",
   "RediscoverOnUpdate":true,
