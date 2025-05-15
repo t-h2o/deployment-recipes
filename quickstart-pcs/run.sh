@@ -63,7 +63,7 @@ prestart_service() {
 		"${LIST_YAML[@]}" \
 		up -d
 
-	while IFS= read -r result; do
+	while IFS= read -r _; do
 		break
 	done < <(docker events --filter "container=${DOMAIN_NAME}" --filter "event=die")
 
