@@ -34,7 +34,6 @@ _get_docker_list() {
 	done
 }
 
-
 _manta_configs() {
 	mkdir -p configs-manta
 	cat >configs-manta/config.toml <<-EOF
