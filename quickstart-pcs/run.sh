@@ -136,7 +136,6 @@ main() {
 	generate_file
 	vault_configure_jwt
 	vault_create_keystore
-	smd_populate
 	add_ip_domain_name
 	docker cp cacert.pem manta-ws:/root
 }
