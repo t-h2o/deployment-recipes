@@ -21,8 +21,6 @@ docker_yml=(
 	"pcs"
 	"vault"
 	"etcd"
-	"rfe"
-	"sushy"
 	"manta"
 	"configurator"
 )
