@@ -17,7 +17,6 @@ docker_yml=(
 	"haproxy-api-gateway"
 	"openchami-svcs"
 	"autocert"
-	"coredhcp"
 	"pcs"
 	"vault"
 	"etcd"
